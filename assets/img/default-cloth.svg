@@ -1,0 +1,23 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-0.98 -0.98 15.96 15.96" id="svg2" fill="#000000"
+    stroke="#000000" stroke-width="0.00014">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+        stroke-width="0.05600000000000001"></g>
+    <g id="SVGRepo_iconCarrier">
+        <metadata id="metadata8">
+            <rdf:rdf>
+                <cc:work rdf:about="">
+                    <dc:format>image/svg+xml</dc:format>
+                    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+                    <dc:title></dc:title>
+                </cc:work>
+            </rdf:rdf>
+        </metadata>
+        <defs id="defs6"></defs>
+        <rect width="14" height="14" x="0" y="0" id="canvas" style="fill:none;stroke:none;visibility:hidden"></rect>
+        <path d="M 3,1 0,3 1,6.35 3,5 3,13 11,13 11,5 13,6.35 14,3 11,1 9,1 C 9,2 8,3 7,3 6,3 5,2 5,1 z" id="clothes"
+            style="fill:#c2c2c2;fill-opacity:1;stroke:none"></path>
+    </g>
+</svg>

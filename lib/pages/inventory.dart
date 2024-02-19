@@ -106,43 +106,51 @@ class _InventoryPageState extends State<InventoryPage> {
                   }),
             ),
           ),
-          ElevatedButton(
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("10 Cloths are Added",
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Theme.of(context).canvasColor,
-                                )),
-                    Row(
+          selectedClothCount > 0
+              ? ElevatedButton(
+                  onPressed: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "send cloths to laundary",
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        Text("10 Cloths are Added",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
+                                  color: Theme.of(context).canvasColor,
+                                )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "send cloths to laundary",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
                                     color: Theme.of(context).canvasColor,
                                   ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward,
+                            )
+                          ],
                         ),
-                        Icon(
-                          Icons.arrow_forward,
-                        )
                       ],
                     ),
-                  ],
-                ),
-              ))
+                  ))
+              : const SizedBox()
         ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _AddItem,
-        shape: const CircleBorder(eccentricity: 0.5),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: selectedClothCount == 0
+          ? FloatingActionButton(
+              onPressed: _AddItem,
+              shape: const CircleBorder(eccentricity: 0.5),
+              child: const Icon(Icons.add),
+            )
+          : const SizedBox(),
     );
   }
 }
