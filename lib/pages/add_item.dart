@@ -16,6 +16,8 @@ class AddItemPage extends StatefulWidget {
 
 class _AddItemPageState extends State<AddItemPage> {
   List<CameraDescription> cameras = [];
+  TextEditingController nameController = TextEditingController();
+  String? nameError;
   CameraController? controller;
   bool isReady = false;
 
@@ -103,12 +105,28 @@ class _AddItemPageState extends State<AddItemPage> {
     });
   }
 
+  void saveItem() {
+    String name = nameController.text.trim();
+    if (name.isEmpty) {
+      setState(() {
+        nameError = "Name is required";
+      });
+      return;
+    } else {
+      setState(() {
+        nameError = null;
+      });
+
+      const boxStore = Item(name = name);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           elevation: 1,
-          title: const Text('Add Cloths'),
+          title: const Text('Add Item'),
           leading: IconButton(
               onPressed: () {
                 context.go("/");
@@ -132,9 +150,32 @@ class _AddItemPageState extends State<AddItemPage> {
             )
           : SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: nameController,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold),
+                            decoration: const InputDecoration(
+                              hintText: 'Item name',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        nameError ?? '',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
                     Card(
                         child: AspectRatio(
                       aspectRatio: 1 / 1,
@@ -178,22 +219,32 @@ class _AddItemPageState extends State<AddItemPage> {
                             ],
                           )
                         : const SizedBox(),
+                    SizedBox(height: 10),
                     Row(
                       children: [
-                        const SizedBox(width: 60, child: Text("Name")),
                         Expanded(
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+                          child: ElevatedButton(
+                            onPressed: () => saveItem(),
+                            style: Theme.of(context)
+                                .elevatedButtonTheme
+                                .style
+                                ?.copyWith(backgroundColor:
+                                    MaterialStateProperty.resolveWith((states) {
+                              return Colors.greenAccent;
+                            })),
+                            child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Text(
+                                  "Add Item",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(color: Colors.white),
+                                )),
                           ),
-                        ),
+                        )
                       ],
-                    ),
-                    const Divider(),
+                    )
                   ],
                 ),
               ),

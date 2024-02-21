@@ -6,8 +6,8 @@ class Item {
   @Id()
   int id = 0;
   List<String> imgpath = [];
+  List<String> tag = [];
   String? name;
-  String? description;
   String? count;
   String? type;
   double? price;

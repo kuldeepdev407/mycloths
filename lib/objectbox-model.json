@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7932492332027291679",
-      "lastPropertyId": "7:2819843710009550810",
+      "lastPropertyId": "8:2546208966551432421",
       "name": "Item",
       "flags": 2,
       "properties": [
@@ -26,11 +26,6 @@
           "type": 9
         },
         {
-          "id": "4:4182022105342773186",
-          "name": "description",
-          "type": 9
-        },
-        {
           "id": "5:8543480107739698037",
           "name": "count",
           "type": 9
@@ -44,6 +39,11 @@
           "id": "7:2819843710009550810",
           "name": "price",
           "type": 8
+        },
+        {
+          "id": "8:2546208966551432421",
+          "name": "tag",
+          "type": 30
         }
       ],
       "relations": []
@@ -57,7 +57,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4182022105342773186
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
