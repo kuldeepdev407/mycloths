@@ -4,6 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mycloths/main.dart';
+import 'package:mycloths/models/item.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:image_picker/image_picker.dart';
 
@@ -88,7 +90,8 @@ class _AddItemPageState extends State<AddItemPage> {
       isTakingpiture = true;
     });
     cameras = await availableCameras();
-    controller = CameraController(cameras[0], ResolutionPreset.medium);
+    controller = CameraController(cameras[0], ResolutionPreset.medium,
+        enableAudio: false);
     controller!.initialize().then((_) {
       if (!mounted) {
         return;
@@ -117,7 +120,18 @@ class _AddItemPageState extends State<AddItemPage> {
         nameError = null;
       });
 
-      const boxStore = Item(name = name);
+      Item item = Item();
+      item.name = name;
+      if (imgPath != "") {
+        String imgPathValue = imgPath;
+        item.imgpath.add(imgPathValue);
+        setState(() {
+          imgPath = "";
+        });
+      }
+      final store = objectBox.store.box<Item>();
+      store.put(item);
+      context.go('/inventory');
     }
   }
 
@@ -133,21 +147,28 @@ class _AddItemPageState extends State<AddItemPage> {
               },
               icon: const Icon(Icons.chevron_left_rounded))),
       body: isTakingpiture
-          ? Column(
-              children: <Widget>[
-                Expanded(
-                  child: CameraPreview(controller!),
-                ),
-                Row(children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _takePicture,
-                      child: const Icon(Icons.camera_alt),
+          ? isReady
+              ? Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: CameraPreview(controller!),
                     ),
-                  ),
-                ])
-              ],
-            )
+                    Row(children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _takePicture,
+                          child: const Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Icon(Icons.camera_alt),
+                          ),
+                        ),
+                      ),
+                    ])
+                  ],
+                )
+              : const SizedBox(
+                  child: Text("Opening Camera.."),
+                )
           : SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.all(8.0),
@@ -176,50 +197,49 @@ class _AddItemPageState extends State<AddItemPage> {
                         style: const TextStyle(color: Colors.red),
                       ),
                     ),
-                    Card(
-                        child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: imgPath != ""
-                          ? Image.file(File(imgPath))
-                          : SvgPicture.asset("assets/img/default-cloth.svg",
-                              semanticsLabel: "Default Img",
-                              height: 50,
-                              width: 50),
-                    )),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                          child: AspectRatio(
+                        aspectRatio: 1 / 1,
+                        child: imgPath != ""
+                            ? Image.file(File(imgPath))
+                            : SvgPicture.asset("assets/img/default-cloth.svg",
+                                semanticsLabel: "Default Img",
+                                height: 50,
+                                width: 50),
+                      )),
+                    ),
                     Row(
                       children: [
                         Expanded(
                             child: ElevatedButton(
                                 onPressed: uploadImage,
-                                child: Text("UploadImg")))
+                                child: Text("UploadImg"))),
+                        imgPath != ""
+                            ? Expanded(
+                                child: ElevatedButton(
+                                    style: Theme.of(context)
+                                        .elevatedButtonTheme
+                                        .style!
+                                        .copyWith(
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) {
+                                        return Colors.redAccent;
+                                      }),
+                                      foregroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) {
+                                        return Colors.white;
+                                      }),
+                                    ),
+                                    onPressed: deleteImage,
+                                    child: const Text("Remove")))
+                            : const SizedBox(),
                       ],
                     ),
-                    imgPath != ""
-                        ? Row(
-                            children: [
-                              Expanded(
-                                  child: ElevatedButton(
-                                      style: Theme.of(context)
-                                          .elevatedButtonTheme
-                                          .style!
-                                          .copyWith(
-                                        backgroundColor:
-                                            MaterialStateProperty.resolveWith(
-                                                (states) {
-                                          return Colors.redAccent;
-                                        }),
-                                        foregroundColor:
-                                            MaterialStateProperty.resolveWith(
-                                                (states) {
-                                          return Colors.white;
-                                        }),
-                                      ),
-                                      onPressed: deleteImage,
-                                      child: Text("Delete")))
-                            ],
-                          )
-                        : const SizedBox(),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(

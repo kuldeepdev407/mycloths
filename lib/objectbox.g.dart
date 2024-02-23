@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 7932492332027291679),
       name: 'Item',
-      lastPropertyId: const IdUid(8, 2546208966551432421),
+      lastPropertyId: const IdUid(9, 3441350623424846284),
       flags: 2,
       properties: <ModelProperty>[
         ModelProperty(
@@ -59,6 +59,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(8, 2546208966551432421),
             name: 'tag',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3441350623424846284),
+            name: 'isInLaundary',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -124,7 +129,7 @@ ModelDefinition getObjectBoxModel() {
               object.type == null ? null : fbb.writeString(object.type!);
           final tagOffset = fbb.writeList(
               object.tag.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(9);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imgpathOffset);
           fbb.addOffset(2, nameOffset);
@@ -132,6 +137,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(5, typeOffset);
           fbb.addFloat64(6, object.price);
           fbb.addOffset(7, tagOffset);
+          fbb.addBool(8, object.isInLaundary);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -156,7 +162,9 @@ ModelDefinition getObjectBoxModel() {
             ..tag = const fb.ListReader<String>(
                     fb.StringReader(asciiOptimization: true),
                     lazy: false)
-                .vTableGet(buffer, rootOffset, 18, []);
+                .vTableGet(buffer, rootOffset, 18, [])
+            ..isInLaundary =
+                const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
 
           return object;
         })
@@ -189,4 +197,8 @@ class Item_ {
   /// see [Item.tag]
   static final tag =
       QueryStringVectorProperty<Item>(_entities[0].properties[6]);
+
+  /// see [Item.isInLaundary]
+  static final isInLaundary =
+      QueryBooleanProperty<Item>(_entities[0].properties[7]);
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:json_theme/json_theme.dart';
 
 class ItemsCard extends StatelessWidget {
   String? imageLink =
@@ -47,9 +46,9 @@ class ItemsCard extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
                 onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Icon(Icons.local_laundry_service),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.local_laundry_service),
                 )),
           )
         ],
